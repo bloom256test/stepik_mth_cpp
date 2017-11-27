@@ -7,13 +7,20 @@ pthread_cond_t cv;
 
 void* wait_cv(void*)
 {
+	std::cout << "locking mutex" << std::endl;
 	pthread_mutex_lock(&mutex);
+	std::cout << "waiting cv" << std::endl;
 	pthread_cond_wait(&cv, &mutex);
+	std::cout << "exiting thread 1" << std::endl;
+	pthread_exit(nullptr);
 }
 
 void* wait_barrier(void*)
 {
+	std::cout << "waiting barrier" << std::endl;
 	pthread_barrier_wait(&barrier);
+	std::cout << "exiting thread 2" << std::endl;
+	pthread_exit(nullptr);
 }
 
 int main(int argc, char** argv)
@@ -31,7 +38,9 @@ int main(int argc, char** argv)
 
 	std::cout << "waiting threads" << std::endl;
 	pthread_join(thread1, nullptr);
+	std::cout << "got thread 1" << std::endl;
 	pthread_join(thread2, nullptr);
+	std::cout << "got thread 2" << std::endl;
 
 	exit(0);
 }
