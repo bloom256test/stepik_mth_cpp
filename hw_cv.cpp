@@ -26,6 +26,7 @@ void* wait_barrier(void*)
 int main(int argc, char** argv)
 {
 	std::cout << "hw_cv" << std::endl;
+	std::cout << "self " << pthread_self() << std::endl;
 
 	pthread_mutex_init(&mutex, nullptr);
 	pthread_cond_init (&cv, nullptr);
